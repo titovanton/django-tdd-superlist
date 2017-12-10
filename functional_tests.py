@@ -1,6 +1,7 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class HomePageTest(unittest.TestCase):
@@ -27,6 +28,11 @@ class HomePageTest(unittest.TestCase):
         )
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys('\n')
+        WebDriverWait(self.browser, 20).until(
+            lambda s: s.find_element_by_id('id-list-table').is_displayed())
+        table = self.browser.find_element_by_id('id-list-table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('Buy peacock feathers', [row.text for row in rows])
 
 
 if __name__ == '__main__':
