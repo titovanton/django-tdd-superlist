@@ -1,12 +1,25 @@
+import unittest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
-options = webdriver.ChromeOptions()
-options.binary_location = '/usr/bin/google-chrome-stable'
-options.add_argument('headless')
-options.add_argument('visible=0')
-options.add_argument('window-size=800x600')
-driver = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
+class HomePageTest(unittest.TestCase):
+    def setUp(self):
+        options = Options()
+        options.binary_location = '/usr/bin/google-chrome-stable'
+        options.add_argument('--headless')
+        options.add_argument('--visible=0')
+        options.add_argument('--window-size=800x600')
+        self.browser = webdriver.Chrome('/usr/local/bin/chromedriver', chrome_options=options)
 
-driver.get('http://localhost:8000')
-assert 'Django' in driver.title
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_home_page(self):
+        self.browser.get('http://10.0.2.15:8000')
+        self.assertIn('To-Do', self.browser.title)
+        self.fail('Finish the test!')
+
+
+if __name__ == '__main__':
+    unittest.main()
