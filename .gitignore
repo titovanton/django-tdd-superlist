@@ -1,0 +1,13 @@
+# Files
+*.pyc
+*.sql
+*.sqlite3
+*.7z
+*.rar
+*.zip
+*.tar
+*.tar.gz
+*.mo
+
+.gulp*
+node_modules
